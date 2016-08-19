@@ -1,36 +1,51 @@
 Name:           nvenc
-Version:        6.0.1
+Version:        7.0.1
 Release:        1%{?dist}
-Summary:        Hardware-Accelerated H.264 and HEVC (H.265) Video Encoding
+Epoch:          1
+Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
 
 License:        https://developer.nvidia.com/nvidia-video-codec-sdk-license-agreement
 URL:            https://developer.nvidia.com/nvidia-video-codec-sdk
-Source0:        nvidia_video_sdk_%{version}.zip
+Source0:        Video_Codec_SDK_%{version}.zip
 
 BuildArch:      noarch
 
+Provides:       nvidia-video-codec-sdk
+Obsoletes:      nvidia-video-codec-sdk
+Provides:       nvenc-devel
+Obsoletes:      nvenc-devel
+
 %description
-The NVIDIA Encoder (NVENC) API enables software developers to access the
-high-performance hardware H.264 and HEVC (H.265) video encoder in Kepler and
-Maxwell class NVIDIA GPUs. NVENC provides high-quality video encoding that is
-faster and more power efficient in comparison to equivalent CUDA-based or
-CPU-based encoders. By using dedicated hardware for the video encoding task, the
-GPU CUDA cores and/or the CPU are available for other compute-intensive tasks.
-NVENC on GeForce hardware can support a maximum of 2 concurrent streams per
-system. NVENC for GRID, Tesla and certain Quadro GPUs (see below) can support as
-many streams as possible up to maximum NVENC encoder rate limit and available
-video memory.
+NVIDIA Products with the Kepler, Maxwell and Pascal generation GPUs contain a
+dedicated accelerator for video encoding, called NVENC and a dedicated
+accelerator for video decoding, called NVDEC, on the GPU die.
+
+While using the dedicated hardware for encode or decode, the GPU’s CUDA cores
+and system CPU are free to run other compute-intensive tasks.
+
+NVENCODE API enables software developers to configure this dedicated hardware
+video encoder. This dedicated accelerator encodes video at higher speeds and
+power efficiency than CUDA-based or CPU-based encoders at equivalent quality.
+NVENCODE API allows the programmer to control various settings of the encoder
+to set the desired tradeoff between quality and performance.
+
+NVDECODE API enables software developers to configure this dedicated hardware
+video decoder. This dedicated accelerator supports hardware-accelerated decoding
+of the following video codecs on Windows and Linux platforms: MPEG-2, VC-1,
+H.264 (AVCHD), H.265 (HEVC), VP8, VP9.
+
+Note: For Video Codec SDK 7.0, NVCUVID has been renamed to NVDECODE API.
 
 %package samples
 Summary:        nvEncoder Sample application source code
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch}:%{version}-%{release}
 
 %description samples
 This package contains nvEncoder Sample application source code demonstrating
 various encoding capabilities.
 
 %prep
-%setup -q -n nvidia_video_sdk_%{version}
+%setup -q -n Video_Codec_SDK_%{version}
 
 %install
 install -m 644 -p -D Samples/common/inc/nvEncodeAPI.h \
@@ -38,13 +53,17 @@ install -m 644 -p -D Samples/common/inc/nvEncodeAPI.h \
 ln -sf %{_includedir}/%{name}/nvEncodeAPI.h Samples/common/inc/nvEncodeAPI.h
 
 %files
-%doc doc/*.pdf
+%doc doc/*.pdf Release_notes.txt ReadMe.txt
 %{_includedir}/%{name}
 
 %files samples
-%doc Release_notes.txt ReadMe.txt Samples
+%doc Samples
 
 %changelog
+* Fri Aug 19 2016 Simone Caronni <negativo17@gmail.com> - 7.0.1-1
+- Update to 7.0.1.
+- Runtime requires drivers 367.35+ and adds support for Pascal GPUs.
+
 * Wed Jan 06 2016 Simone Caronni <negativo17@gmail.com> - 6.0.1-1
 - Update to 6.0.1.
 
