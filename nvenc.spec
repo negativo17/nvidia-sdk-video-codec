@@ -1,5 +1,5 @@
 Name:           nvenc
-Version:        7.0.1
+Version:        7.1.9
 Release:        1%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
@@ -10,10 +10,10 @@ Source0:        Video_Codec_SDK_%{version}.zip
 
 BuildArch:      noarch
 
-Provides:       nvidia-video-codec-sdk
-Obsoletes:      nvidia-video-codec-sdk
-Provides:       nvenc-devel
-Obsoletes:      nvenc-devel
+Provides:       nvidia-video-codec-sdk = %{?epoch}:%{version}-%{release}
+Obsoletes:      nvidia-video-codec-sdk < %{?epoch}:%{version}-%{release}
+Provides:       nvenc-devel = %{?epoch}:%{version}-%{release}
+Obsoletes:      nvenc-devel < %{?epoch}:%{version}-%{release}
 
 %description
 NVIDIA Products with the Kepler, Maxwell and Pascal generation GPUs contain a
@@ -53,13 +53,18 @@ install -m 644 -p -D Samples/common/inc/nvEncodeAPI.h \
 ln -sf %{_includedir}/%{name}/nvEncodeAPI.h Samples/common/inc/nvEncodeAPI.h
 
 %files
+%license LicenseAgreement.pdf
 %doc doc/*.pdf Release_notes.txt ReadMe.txt
 %{_includedir}/%{name}
 
 %files samples
+%license LicenseAgreement.pdf
 %doc Samples
 
 %changelog
+* Sun Jan 08 2017 Simone Caronni <negativo17@gmail.com> - 1:7.1.9-1
+- Update to 7.1.9.
+
 * Fri Aug 19 2016 Simone Caronni <negativo17@gmail.com> - 7.0.1-1
 - Update to 7.0.1.
 - Runtime requires drivers 367.35+ and adds support for Pascal GPUs.
