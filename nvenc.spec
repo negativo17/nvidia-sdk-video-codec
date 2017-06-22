@@ -1,5 +1,5 @@
 Name:           nvenc
-Version:        7.1.9
+Version:        8.0.14
 Release:        1%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
@@ -58,10 +58,14 @@ ln -sf %{_includedir}/%{name}/nvEncodeAPI.h Samples/common/inc/nvEncodeAPI.h
 %{_includedir}/%{name}
 
 %files samples
-%license LicenseAgreement.pdf
 %doc Samples
 
 %changelog
+* Thu Jun 22 2017 Simone Caronni <negativo17@gmail.com> - 1:8.0.14-1
+- Update to 8.0.14.
+- Do not add license also to samples, as it requires the base package.
+- Requires Linux display driver 378.13+.
+
 * Sun Jan 08 2017 Simone Caronni <negativo17@gmail.com> - 1:7.1.9-1
 - Update to 7.1.9.
 
