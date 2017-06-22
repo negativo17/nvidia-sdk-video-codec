@@ -15,6 +15,11 @@ Obsoletes:      nvidia-video-codec-sdk < %{?epoch}:%{version}-%{release}
 Provides:       nvenc-devel = %{?epoch}:%{version}-%{release}
 Obsoletes:      nvenc-devel < %{?epoch}:%{version}-%{release}
 
+# Required for:
+# - libnvcuvid.so (NVDECODE)
+# - libnvidia-encode.so (NVENCODE)
+Requires:       nvidia-driver-devel >= 2:378.13
+
 %description
 NVIDIA Products with the Kepler, Maxwell and Pascal generation GPUs contain a
 dedicated accelerator for video encoding, called NVENC and a dedicated
@@ -34,8 +39,6 @@ video decoder. This dedicated accelerator supports hardware-accelerated decoding
 of the following video codecs on Windows and Linux platforms: MPEG-2, VC-1,
 H.264 (AVCHD), H.265 (HEVC), VP8, VP9.
 
-Note: For Video Codec SDK 7.0, NVCUVID has been renamed to NVDECODE API.
-
 %package samples
 Summary:        nvEncoder Sample application source code
 Requires:       %{name} = %{?epoch}:%{version}-%{release}
@@ -48,9 +51,11 @@ various encoding capabilities.
 %setup -q -n Video_Codec_SDK_%{version}
 
 %install
-install -m 644 -p -D Samples/common/inc/nvEncodeAPI.h \
-    %{buildroot}%{_includedir}/%{name}/nvEncodeAPI.h
-ln -sf %{_includedir}/%{name}/nvEncodeAPI.h Samples/common/inc/nvEncodeAPI.h
+mkdir -p %{_includedir}/%{name}
+for h in nvEncodeAPI.h dynlink_cuviddec.h dynlink_nvcuvid.h; do
+  install -m 644 -p Samples/common/inc/$h %{buildroot}%{_includedir}/%{name}/
+  ln -sf %{_includedir}/%{name}/$h Samples/common/inc/$h
+done
 
 %files
 %license LicenseAgreement.pdf
@@ -64,7 +69,9 @@ ln -sf %{_includedir}/%{name}/nvEncodeAPI.h Samples/common/inc/nvEncodeAPI.h
 * Thu Jun 22 2017 Simone Caronni <negativo17@gmail.com> - 1:8.0.14-1
 - Update to 8.0.14.
 - Do not add license also to samples, as it requires the base package.
-- Requires Linux display driver 378.13+.
+- Requires driver 378.13+.
+- Add NVDECODE headers and require nvidia-driver-devel for unversioned shared
+  libraries.
 
 * Sun Jan 08 2017 Simone Caronni <negativo17@gmail.com> - 1:7.1.9-1
 - Update to 7.1.9.
