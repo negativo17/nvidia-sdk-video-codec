@@ -44,8 +44,8 @@ Summary:        nvEncoder Sample application source code
 Requires:       %{name} = %{?epoch}:%{version}-%{release}
 
 %description samples
-This package contains nvEncoder Sample application source code demonstrating
-various encoding capabilities.
+This package contains sample application source code demonstrating various
+encoding and decoding capabilities.
 
 %prep
 %setup -q -n Video_Codec_SDK_%{version}
