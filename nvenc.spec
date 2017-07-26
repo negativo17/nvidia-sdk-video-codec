@@ -51,7 +51,7 @@ encoding and decoding capabilities.
 %setup -q -n Video_Codec_SDK_%{version}
 
 %install
-mkdir -p %{_includedir}/%{name}
+mkdir -p %{buildroot}%{_includedir}/%{name}
 for h in nvEncodeAPI.h dynlink_cuviddec.h dynlink_nvcuvid.h; do
   install -m 644 -p Samples/common/inc/$h %{buildroot}%{_includedir}/%{name}/
   ln -sf %{_includedir}/%{name}/$h Samples/common/inc/$h
