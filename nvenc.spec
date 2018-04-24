@@ -1,5 +1,5 @@
 Name:           nvenc
-Version:        8.0.14
+Version:        8.1.24
 Release:        1%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
@@ -59,13 +59,16 @@ done
 
 %files
 %license LicenseAgreement.pdf
-%doc doc/*.pdf Release_notes.txt ReadMe.txt
+%doc doc/*.pdf *.txt
 %{_includedir}/%{name}
 
 %files samples
 %doc Samples
 
 %changelog
+* Tue Apr 24 2018 Simone Caronni <negativo17@gmail.com> - 1:8.1.24-1
+- Update to 8.1.24, do not add legacy samples.
+
 * Thu Jun 22 2017 Simone Caronni <negativo17@gmail.com> - 1:8.0.14-1
 - Update to 8.0.14.
 - Do not add license also to samples, as it requires the base package.
