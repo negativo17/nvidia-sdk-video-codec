@@ -3,41 +3,35 @@ Version:        8.1.24
 Release:        1%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
-
 License:        https://developer.nvidia.com/nvidia-video-codec-sdk-license-agreement
 URL:            https://developer.nvidia.com/nvidia-video-codec-sdk
+
 Source0:        Video_Codec_SDK_%{version}.zip
 
 BuildArch:      noarch
 
-Provides:       nvidia-video-codec-sdk = %{?epoch}:%{version}-%{release}
-Obsoletes:      nvidia-video-codec-sdk < %{?epoch}:%{version}-%{release}
-Provides:       nvenc-devel = %{?epoch}:%{version}-%{release}
-Obsoletes:      nvenc-devel < %{?epoch}:%{version}-%{release}
+Conflicts:      nvidia-video-codec-sdk
 
 # Required for:
 # - libnvcuvid.so (NVDECODE)
 # - libnvidia-encode.so (NVENCODE)
 Requires:       nvidia-driver-devel >= 2:378.13
+Requires:       cuda-devel >= 8.0
 
 %description
-NVIDIA Products with the Kepler, Maxwell and Pascal generation GPUs contain a
-dedicated accelerator for video encoding, called NVENC and a dedicated
-accelerator for video decoding, called NVDEC, on the GPU die.
+The SDK consists of two hardware acceleration interfaces:
 
-While using the dedicated hardware for encode or decode, the GPU’s CUDA cores
-and system CPU are free to run other compute-intensive tasks.
+    NVENCODE API for video encode acceleration
+    NVDECODE API for video decode acceleration (formerly called NVCUVID API)
 
-NVENCODE API enables software developers to configure this dedicated hardware
-video encoder. This dedicated accelerator encodes video at higher speeds and
-power efficiency than CUDA-based or CPU-based encoders at equivalent quality.
-NVENCODE API allows the programmer to control various settings of the encoder
-to set the desired tradeoff between quality and performance.
+NVIDIA GPUs contain one or more hardware-based decoder and encoder(s) (separate
+from the CUDA cores) which provides fully-accelerated hardware-based video
+decoding and encoding for several popular codecs. With decoding/encoding
+offloaded, the graphics engine and the CPU are free for other operations.
 
-NVDECODE API enables software developers to configure this dedicated hardware
-video decoder. This dedicated accelerator supports hardware-accelerated decoding
-of the following video codecs on Windows and Linux platforms: MPEG-2, VC-1,
-H.264 (AVCHD), H.265 (HEVC), VP8, VP9.
+GPU hardware accelerator engine for video decoding (referred to as NVDEC)
+supports faster than real-time decoding which makes it suitable to be used
+for transcoding applications, in addition to video playback applications.
 
 %package samples
 Summary:        nvEncoder Sample application source code
@@ -51,23 +45,30 @@ encoding and decoding capabilities.
 %setup -q -n Video_Codec_SDK_%{version}
 
 %install
-mkdir -p %{buildroot}%{_includedir}/%{name}
-for h in nvEncodeAPI.h dynlink_cuviddec.h dynlink_nvcuvid.h; do
-  install -m 644 -p Samples/common/inc/$h %{buildroot}%{_includedir}/%{name}/
-  ln -sf %{_includedir}/%{name}/$h Samples/common/inc/$h
-done
+mkdir -p %{buildroot}%{_includedir}/%{name}/
+install -m 644 -p \
+    Samples/NvCodec/NvEncoder/nvEncodeAPI.h \
+    Samples/NvCodec/NvDecoder/cuviddec.h \
+    Samples/NvCodec/NvDecoder/nvcuvid.h \
+    %{buildroot}%{_includedir}/%{name}/
+
+ln -sf %{_includedir}/%{name}/nvEncodeAPI.h Samples/NvCodec/NvEncoder/nvEncodeAPI.h
+ln -sf %{_includedir}/%{name}/cuviddec.h Samples/NvCodec/NvDecoder/cuviddec.h
+ln -sf %{_includedir}/%{name}/nvcuvid.h Samples/NvCodec/NvDecoder/nvcuvid.h
 
 %files
 %license LicenseAgreement.pdf
 %doc doc/*.pdf *.txt
 %{_includedir}/%{name}
-
+ 
 %files samples
 %doc Samples
 
 %changelog
 * Tue Apr 24 2018 Simone Caronni <negativo17@gmail.com> - 1:8.1.24-1
 - Update to 8.1.24, do not add legacy samples.
+- Update SPEC file.
+- Require CUDA development package for 8.1.
 
 * Thu Jun 22 2017 Simone Caronni <negativo17@gmail.com> - 1:8.0.14-1
 - Update to 8.0.14.
