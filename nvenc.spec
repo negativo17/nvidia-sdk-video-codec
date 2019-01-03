@@ -1,5 +1,5 @@
 Name:           nvenc
-Version:        8.1.24
+Version:        8.2.16
 Release:        1%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
@@ -15,14 +15,14 @@ Conflicts:      nvidia-video-codec-sdk
 # Required for:
 # - libnvcuvid.so (NVDECODE)
 # - libnvidia-encode.so (NVENCODE)
-Requires:       nvidia-driver-devel >= 2:378.13
-Requires:       cuda-devel >= 8.0
+Requires:       nvidia-driver-devel >= 2:396.24
+Requires:       cuda-devel >= 1:8.0
 
 %description
 The SDK consists of two hardware acceleration interfaces:
 
     NVENCODE API for video encode acceleration
-    NVDECODE API for video decode acceleration (formerly called NVCUVID API)
+    NVDECODE API for video decode acceleration
 
 NVIDIA GPUs contain one or more hardware-based decoder and encoder(s) (separate
 from the CUDA cores) which provides fully-accelerated hardware-based video
@@ -47,14 +47,22 @@ encoding and decoding capabilities.
 %install
 mkdir -p %{buildroot}%{_includedir}/%{name}/
 install -m 644 -p \
-    Samples/NvCodec/NvEncoder/nvEncodeAPI.h \
     Samples/NvCodec/NvDecoder/cuviddec.h \
     Samples/NvCodec/NvDecoder/nvcuvid.h \
+    Samples/NvCodec/NvDecoder/NvDecoder.h \
+    Samples/NvCodec/NvEncoder/nvEncodeAPI.h \
+    Samples/NvCodec/NvEncoder/NvEncoderCuda.h \
+    Samples/NvCodec/NvEncoder/NvEncoderGL.h \
+    Samples/NvCodec/NvEncoder/NvEncoder.h \
     %{buildroot}%{_includedir}/%{name}/
 
-ln -sf %{_includedir}/%{name}/nvEncodeAPI.h Samples/NvCodec/NvEncoder/nvEncodeAPI.h
 ln -sf %{_includedir}/%{name}/cuviddec.h Samples/NvCodec/NvDecoder/cuviddec.h
 ln -sf %{_includedir}/%{name}/nvcuvid.h Samples/NvCodec/NvDecoder/nvcuvid.h
+ln -sf %{_includedir}/%{name}/NvDecoder.h Samples/NvCodec/NvDecoder/NvDecoder.h
+ln -sf %{_includedir}/%{name}/nvEncodeAPI.h Samples/NvCodec/NvEncoder/nvEncodeAPI.h
+ln -sf %{_includedir}/%{name}/NvEncoderCuda.h Samples/NvCodec/NvEncoder/NvEncoderCuda.h
+ln -sf %{_includedir}/%{name}/NvEncoderGL.h Samples/NvCodec/NvEncoder/NvEncoderGL.h
+ln -sf %{_includedir}/%{name}/NvEncoder.h Samples/NvCodec/NvEncoder/NvEncoder.h
 
 %files
 %license LicenseAgreement.pdf
@@ -65,6 +73,9 @@ ln -sf %{_includedir}/%{name}/nvcuvid.h Samples/NvCodec/NvDecoder/nvcuvid.h
 %doc Samples
 
 %changelog
+* Thu Jan 03 2019 Simone Caronni <negativo17@gmail.com> - 1:8.2.16-1
+- Update to 8.2.16.
+
 * Tue Apr 24 2018 Simone Caronni <negativo17@gmail.com> - 1:8.1.24-1
 - Update to 8.1.24, do not add legacy samples.
 - Update SPEC file.
