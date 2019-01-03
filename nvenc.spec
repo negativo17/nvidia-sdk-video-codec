@@ -43,6 +43,8 @@ encoding and decoding capabilities.
 
 %prep
 %setup -q -n Video_Codec_SDK_%{version}
+# Remove stub libraries
+rm -fr Samples/NvCodec/Lib
 
 %install
 mkdir -p %{buildroot}%{_includedir}/%{name}/
