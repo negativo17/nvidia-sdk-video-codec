@@ -16,7 +16,6 @@ Conflicts:      nvidia-video-codec-sdk
 # - libnvcuvid.so (NVDECODE)
 # - libnvidia-encode.so (NVENCODE)
 Requires:       nvidia-driver-devel >= 2:396.24
-Requires:       cuda-devel >= 1:8.0
 
 %description
 The SDK consists of two hardware acceleration interfaces:
