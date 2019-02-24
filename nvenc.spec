@@ -1,5 +1,5 @@
 Name:           nvenc
-Version:        8.2.16
+Version:        9.0.20
 Release:        1%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
@@ -42,28 +42,13 @@ encoding and decoding capabilities.
 
 %prep
 %setup -q -n Video_Codec_SDK_%{version}
+
 # Remove stub libraries
-rm -fr Samples/NvCodec/Lib
+rm -fr Lib
 
 %install
 mkdir -p %{buildroot}%{_includedir}/%{name}/
-install -m 644 -p \
-    Samples/NvCodec/NvDecoder/cuviddec.h \
-    Samples/NvCodec/NvDecoder/nvcuvid.h \
-    Samples/NvCodec/NvDecoder/NvDecoder.h \
-    Samples/NvCodec/NvEncoder/nvEncodeAPI.h \
-    Samples/NvCodec/NvEncoder/NvEncoderCuda.h \
-    Samples/NvCodec/NvEncoder/NvEncoderGL.h \
-    Samples/NvCodec/NvEncoder/NvEncoder.h \
-    %{buildroot}%{_includedir}/%{name}/
-
-ln -sf %{_includedir}/%{name}/cuviddec.h Samples/NvCodec/NvDecoder/cuviddec.h
-ln -sf %{_includedir}/%{name}/nvcuvid.h Samples/NvCodec/NvDecoder/nvcuvid.h
-ln -sf %{_includedir}/%{name}/NvDecoder.h Samples/NvCodec/NvDecoder/NvDecoder.h
-ln -sf %{_includedir}/%{name}/nvEncodeAPI.h Samples/NvCodec/NvEncoder/nvEncodeAPI.h
-ln -sf %{_includedir}/%{name}/NvEncoderCuda.h Samples/NvCodec/NvEncoder/NvEncoderCuda.h
-ln -sf %{_includedir}/%{name}/NvEncoderGL.h Samples/NvCodec/NvEncoder/NvEncoderGL.h
-ln -sf %{_includedir}/%{name}/NvEncoder.h Samples/NvCodec/NvEncoder/NvEncoder.h
+install -m 644 -p include/* %{buildroot}%{_includedir}/%{name}/
 
 %files
 %license LicenseAgreement.pdf
@@ -74,6 +59,9 @@ ln -sf %{_includedir}/%{name}/NvEncoder.h Samples/NvCodec/NvEncoder/NvEncoder.h
 %doc Samples
 
 %changelog
+* Sun Feb 24 2019 Simone Caronni <negativo17@gmail.com> - 1:9.0.20-1
+- Update to 9.0.20.
+
 * Thu Jan 03 2019 Simone Caronni <negativo17@gmail.com> - 1:8.2.16-1
 - Update to 8.2.16.
 
