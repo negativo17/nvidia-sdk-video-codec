@@ -1,5 +1,5 @@
 Name:           nvenc
-Version:        9.0.20
+Version:        9.1.23
 Release:        1%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
@@ -59,6 +59,9 @@ install -m 644 -p include/* %{buildroot}%{_includedir}/%{name}/
 %doc Samples
 
 %changelog
+* Mon Sep 30 2019 Simone Caronni <negativo17@gmail.com> - 1:9.1.23-1
+- Update to 9.1.23.
+
 * Sun Feb 24 2019 Simone Caronni <negativo17@gmail.com> - 1:9.0.20-1
 - Update to 9.0.20.
 
