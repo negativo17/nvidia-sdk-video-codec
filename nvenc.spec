@@ -1,14 +1,13 @@
 Name:           nvenc
-Version:        9.1.23
+Version:        10.0.26
 Release:        1%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
 License:        https://developer.nvidia.com/nvidia-video-codec-sdk-license-agreement
 URL:            https://developer.nvidia.com/nvidia-video-codec-sdk
+BuildArch:      noarch
 
 Source0:        Video_Codec_SDK_%{version}.zip
-
-BuildArch:      noarch
 
 Conflicts:      nvidia-video-codec-sdk
 
@@ -28,9 +27,10 @@ from the CUDA cores) which provides fully-accelerated hardware-based video
 decoding and encoding for several popular codecs. With decoding/encoding
 offloaded, the graphics engine and the CPU are free for other operations.
 
-GPU hardware accelerator engine for video decoding (referred to as NVDEC)
-supports faster than real-time decoding which makes it suitable to be used
-for transcoding applications, in addition to video playback applications.
+GPU hardware accelerator engines for video decoding (referred to as NVDEC) and
+video encoding (referred to as NVENC) support faster than real-time video
+processing which makes them suitable to be used for transcoding applications, in
+addition to video playback.
 
 %package samples
 Summary:        nvEncoder Sample application source code
@@ -48,17 +48,20 @@ rm -fr Lib
 
 %install
 mkdir -p %{buildroot}%{_includedir}/%{name}/
-install -m 644 -p include/* %{buildroot}%{_includedir}/%{name}/
+install -m 644 -p Interface/* %{buildroot}%{_includedir}/%{name}/
 
 %files
 %license LicenseAgreement.pdf
-%doc doc/*.pdf *.txt
+%doc Doc/*.pdf *.txt *.pdf
 %{_includedir}/%{name}
  
 %files samples
 %doc Samples
 
 %changelog
+* Fri Jul 10 2020 Simone Caronni <negativo17@gmail.com> - 1:10.0.26-1
+- Update to 10.0.26.
+
 * Mon Sep 30 2019 Simone Caronni <negativo17@gmail.com> - 1:9.1.23-1
 - Update to 9.1.23.
 
