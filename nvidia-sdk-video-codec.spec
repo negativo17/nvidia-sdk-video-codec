@@ -61,7 +61,7 @@ install -m 644 -p Interface/* %{buildroot}%{_includedir}/%{name}/
 %{_includedir}/%{name}
  
 %files samples
-%doc Samples
+%doc Samples/*
 
 %changelog
 * Tue Aug 25 2020 Simone Caronni <negativo17@gmail.com> - 1:10.0.26-2
