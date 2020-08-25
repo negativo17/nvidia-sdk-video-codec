@@ -1,6 +1,6 @@
-Name:           nvenc
+Name:           nvidia-sdk-video-codec
 Version:        10.0.26
-Release:        1%{?dist}
+Release:        2%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
 License:        https://developer.nvidia.com/nvidia-video-codec-sdk-license-agreement
@@ -10,6 +10,9 @@ BuildArch:      noarch
 Source0:        Video_Codec_SDK_%{version}.zip
 
 Conflicts:      nvidia-video-codec-sdk
+
+Obsoletes:      nvenc < %{?epoch}:%{version}-%{release}
+Provides:       nvenc = %{?epoch}:%{version}-%{release}
 
 # Required for:
 # - libnvcuvid.so (NVDECODE)
@@ -35,6 +38,8 @@ addition to video playback.
 %package samples
 Summary:        nvEncoder Sample application source code
 Requires:       %{name} = %{?epoch}:%{version}-%{release}
+Obsoletes:      nvenc-samples < %{?epoch}:%{version}-%{release}
+Provides:       nvenc-samples = %{?epoch}:%{version}-%{release}
 
 %description samples
 This package contains sample application source code demonstrating various
@@ -59,6 +64,9 @@ install -m 644 -p Interface/* %{buildroot}%{_includedir}/%{name}/
 %doc Samples
 
 %changelog
+* Tue Aug 25 2020 Simone Caronni <negativo17@gmail.com> - 1:10.0.26-2
+- Rename to nvidia-video-codec-sdk.
+
 * Fri Jul 10 2020 Simone Caronni <negativo17@gmail.com> - 1:10.0.26-1
 - Update to 10.0.26.
 
