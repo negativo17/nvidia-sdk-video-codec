@@ -3,7 +3,7 @@ Version:        10.0.26
 Release:        2%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
-License:        https://developer.nvidia.com/nvidia-video-codec-sdk-license-agreement
+License:        https://developer.download.nvidia.com/designworks/DesignWorks_SDKs_Samples_Tools_License_distrib_use_rights_2017_06_13.pdf
 URL:            https://developer.nvidia.com/nvidia-video-codec-sdk
 BuildArch:      noarch
 
