@@ -1,6 +1,6 @@
 Name:           nvidia-sdk-video-codec
-Version:        10.0.26
-Release:        2%{?dist}
+Version:        11.1.5
+Release:        1%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
 License:        https://developer.download.nvidia.com/designworks/DesignWorks_SDKs_Samples_Tools_License_distrib_use_rights_2017_06_13.pdf
@@ -64,6 +64,9 @@ install -m 644 -p Interface/* %{buildroot}%{_includedir}/%{name}/
 %doc Samples/*
 
 %changelog
+* Wed Sep 22 2021 Simone Caronni <negativo17@gmail.com> - 1:11.1.5-1
+- Update to 11.1.5.
+
 * Tue Aug 25 2020 Simone Caronni <negativo17@gmail.com> - 1:10.0.26-2
 - Rename to nvidia-video-codec-sdk.
 
