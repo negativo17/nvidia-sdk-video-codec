@@ -1,13 +1,14 @@
 Name:           nvidia-sdk-video-codec
-Version:        11.1.5
+Version:        12.0.16
 Release:        1%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
-License:        https://developer.download.nvidia.com/designworks/DesignWorks_SDKs_Samples_Tools_License_distrib_use_rights_2017_06_13.pdf
+License:        DESIGNWORKS NVIDIA SDKS, SAMPLES AND TOOLS AGREEMENT, DISTRIBUTION RIGHTS (V.13.06.2017)
 URL:            https://developer.nvidia.com/nvidia-video-codec-sdk
 BuildArch:      noarch
 
-Source0:        Video_Codec_SDK_%{version}.zip
+Source0:        Video_Codec_Interface_%{version}.zip
+Source1:        https://developer.download.nvidia.com/designworks/DesignWorks_SDKs_Samples_Tools_License_distrib_use_rights_2017_06_13.pdf
 
 Conflicts:      nvidia-video-codec-sdk
 
@@ -17,7 +18,7 @@ Provides:       nvenc = %{?epoch}:%{version}-%{release}
 # Required for:
 # - libnvcuvid.so (NVDECODE)
 # - libnvidia-encode.so (NVENCODE)
-Requires:       nvidia-driver-devel >= 2:396.24
+Requires:       nvidia-driver >= 3:520.56.06
 
 %description
 The SDK consists of two hardware acceleration interfaces:
@@ -35,35 +36,24 @@ video encoding (referred to as NVENC) support faster than real-time video
 processing which makes them suitable to be used for transcoding applications, in
 addition to video playback.
 
-%package samples
-Summary:        nvEncoder Sample application source code
-Requires:       %{name} = %{?epoch}:%{version}-%{release}
-Obsoletes:      nvenc-samples < %{?epoch}:%{version}-%{release}
-Provides:       nvenc-samples = %{?epoch}:%{version}-%{release}
-
-%description samples
-This package contains sample application source code demonstrating various
-encoding and decoding capabilities.
-
 %prep
-%setup -q -n Video_Codec_SDK_%{version}
-
-# Remove stub libraries
-rm -fr Lib
+%setup -q -n Video_Codec_Interface_%{version}
+cp %{SOURCE1} .
 
 %install
 mkdir -p %{buildroot}%{_includedir}/%{name}/
 install -m 644 -p Interface/* %{buildroot}%{_includedir}/%{name}/
 
 %files
-%license LicenseAgreement.pdf
-%doc Doc/*.pdf *.txt *.pdf
+%license DesignWorks_SDKs_Samples_Tools_License_distrib_use_rights_2017_06_13.pdf
+%doc ReadMe.pdf
 %{_includedir}/%{name}
  
-%files samples
-%doc Samples/*
-
 %changelog
+* Mon Feb 06 2023 Simone Caronni <negativo17@gmail.com> - 1:12.0.16-1
+- Update to 12.0.16.
+- Switch to headers only package, drop samples.
+
 * Wed Sep 22 2021 Simone Caronni <negativo17@gmail.com> - 1:11.1.5-1
 - Update to 11.1.5.
 
