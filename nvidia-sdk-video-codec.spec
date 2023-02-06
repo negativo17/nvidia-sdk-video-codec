@@ -18,7 +18,7 @@ Provides:       nvenc = %{?epoch}:%{version}-%{release}
 # Required for:
 # - libnvcuvid.so (NVDECODE)
 # - libnvidia-encode.so (NVENCODE)
-Requires:       nvidia-driver >= 3:520.56.06
+Requires:       nvidia-driver-cuda-libs >= 3:520.56.06
 
 %description
 The SDK consists of two hardware acceleration interfaces:
