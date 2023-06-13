@@ -1,14 +1,15 @@
 Name:           nvidia-sdk-video-codec
-Version:        12.0.16
+Version:        12.1.14
 Release:        1%{?dist}
 Epoch:          1
 Summary:        A comprehensive set of APIs for hardware accelerated video encode and decode
 License:        DESIGNWORKS NVIDIA SDKS, SAMPLES AND TOOLS AGREEMENT, DISTRIBUTION RIGHTS (V.13.06.2017)
-URL:            https://developer.nvidia.com/nvidia-video-codec-sdk
+URL:            https://developer.nvidia.com/video-codec-sdk
 BuildArch:      noarch
 
 Source0:        Video_Codec_Interface_%{version}.zip
-Source1:        https://developer.download.nvidia.com/designworks/DesignWorks_SDKs_Samples_Tools_License_distrib_use_rights_2017_06_13.pdf
+# From documentation at: https://docs.nvidia.com/video-technologies/index.html
+Source1:        https://docs.nvidia.com/video-technologies/video-codec-sdk/12.1/pdf/License.pdf
 
 Conflicts:      nvidia-video-codec-sdk
 
@@ -45,11 +46,14 @@ mkdir -p %{buildroot}%{_includedir}/%{name}/
 install -m 644 -p Interface/* %{buildroot}%{_includedir}/%{name}/
 
 %files
-%license DesignWorks_SDKs_Samples_Tools_License_distrib_use_rights_2017_06_13.pdf
+%license License.pdf
 %doc ReadMe.pdf
 %{_includedir}/%{name}
  
 %changelog
+* Tue Jun 13 2023 Simone Caronni <negativo17@gmail.com> - 1:12.1.14-1
+- Update to 12.1.14.
+
 * Mon Feb 06 2023 Simone Caronni <negativo17@gmail.com> - 1:12.0.16-1
 - Update to 12.0.16.
 - Switch to headers only package, drop samples.
